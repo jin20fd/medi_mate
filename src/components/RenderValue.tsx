@@ -40,16 +40,28 @@ export default function renderValue(value: any) {
                 return (
                   <div
                     key={i}
-                    dangerouslySetInnerHTML={{ __html: `<table>${rawText}</table>` }}
+                    dangerouslySetInnerHTML={{
+                      __html: `
+                        <table border="1" style="border-collapse: collapse; width: 100%;">
+                          <style>
+                            table, th, td {
+                              border: 1px solid #aaa;
+                              padding: 4px;
+                              text-align: left;
+                            }
+                          </style>
+                          ${rawText}
+                        </table>
+                      `,
+                    }}
                     style={{
-                      border: '1px solid #ccc',
                       marginBottom: '1rem',
                       overflowX: 'auto',
                     }}
                   />
                 );
               }
-                // 나머지는 디코딩 후 텍스트 출력
+              // 나머지는 디코딩 후 텍스트 출력
               const htmlText = decodeHtmlEntities(rawText);
               return <p key={i}>{htmlText}</p>;
             })}
