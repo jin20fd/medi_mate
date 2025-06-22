@@ -21,7 +21,7 @@ export default function renderValue(value: any) {
 
     return (
       <div>
-        {articles.map((article, idx) => {
+        {articles.map((article: any, idx: any) => {
           const title = article['@_title'] || article.title || '';
           const paragraphs = Array.isArray(article.PARAGRAPH)
             ? article.PARAGRAPH
@@ -30,7 +30,7 @@ export default function renderValue(value: any) {
           return (
             <div key={idx}>
               {title && <h4>{decodeHtmlEntities(title)}</h4>}
-              {paragraphs.map((p, i) => {
+              {paragraphs.map((p: any, i: any) => {
                 const rawText = p['#text'] || '';
                 const tagName = p['@_tagName'] || p.tagName || 'p';
 
