@@ -3,16 +3,16 @@ import { XMLParser } from 'fast-xml-parser';
 
 const base = import.meta.env.VITE_OPEN_API_BASE;
 const key = import.meta.env.VITE_API_SERVICE_KEY;
-const url = `${base}?serviceKey=${key}&pageNo=1&numOfRows=100&type=xml`;
 
 type ItemData = Record<string, any>;
 
-export const useDrugSearch = (searchTerm: string) => {
+// 변경: page 매개변수 추가
+export const useDrugSearch = (searchTerm: string, page: number) => {
   const [items, setItems] = useState<ItemData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [noResult, setNoResult] = useState(false);
-  const [totalCount, setTotalCount] = useState(0);  // 총 결과 수 상태 추가
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     if (!searchTerm) return;
@@ -23,8 +23,10 @@ export const useDrugSearch = (searchTerm: string) => {
       setNoResult(false);
       setTotalCount(0);
 
+      const pageUrl = `${base}?serviceKey=${key}&pageNo=${page}&numOfRows=10&type=xml&item_name=${encodeURIComponent(searchTerm)}`;
+
       try {
-        const response = await fetch(`${url}&item_name=${encodeURIComponent(searchTerm)}`);
+        const response = await fetch(pageUrl);
         const xmlText = await response.text();
         const parser = new XMLParser({ ignoreAttributes: false });
         const json = parser.parse(xmlText);
@@ -49,7 +51,7 @@ export const useDrugSearch = (searchTerm: string) => {
     };
 
     fetchData();
-  }, [searchTerm]);
+  }, [searchTerm, page]);
 
   return { items, loading, error, noResult, totalCount };
 };
