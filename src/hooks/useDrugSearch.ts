@@ -15,8 +15,6 @@ export const useDrugSearch = (searchTerm: string, page: number) => {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    if (!searchTerm) return;
-
     const fetchData = async () => {
       setLoading(true);
       setError(null);
