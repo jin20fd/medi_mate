@@ -33,11 +33,15 @@ function App() {
 
       {loading && <p>🔄 로딩 중...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {totalCount > 0 && <p>검색 결과 총 {totalCount}건</p>}
+      {totalCount > 0 && (
+        <>
+          <p>검색 결과 총 {totalCount}건 / {totalPages}페이지</p>
+        </>
+      )}
 
       {items.length > 0 && (
         <>
-          <h2>검색 결과 (페이지 {page} / {totalPages})</h2>
+          <h2>검색 결과</h2>
           <ItemList items={items} selectedItem={selectedItem} onSelect={handleSelect} />
         </>
       )}

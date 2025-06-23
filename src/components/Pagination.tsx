@@ -57,8 +57,8 @@ export default function Pagination({ current, total, onPageChange }: Props) {
         </button>
       ))}
 
-      <button onClick={goToNext} disabled={current === total}>&gt;&gt;</button>
-      <button onClick={goToLast} disabled={current === total}>&gt;</button>
+      <button onClick={goToNext} disabled={current === total}>&gt;</button>
+      <button onClick={goToLast} disabled={current === total}>&gt;&gt;</button>
     </div>
   );
 }
